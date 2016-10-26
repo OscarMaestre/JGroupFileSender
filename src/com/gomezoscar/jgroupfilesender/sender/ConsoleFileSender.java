@@ -13,10 +13,11 @@ public class ConsoleFileSender {
 		ResourceBundle messages;
 		currentLocale=new Locale("es", "ES");
 		messages=ResourceBundle.getBundle("resources/MessagesBundle", currentLocale);
-		UDPProcessor fileSender;
+		FileSender fileSender;
 		try{
-			fileSender=new FileSender("224.0.0.14");
+			fileSender=new FileSender();
 			System.out.println(messages.getString("FILE_NOT_FOUND"));
+			fileSender.sendFile("224.0.0.14", "/home/usuario/prueba.txt");
 		}
 		catch (UnknownHostException e){
 			System.out.println(messages.getString("INVALID_IP"));

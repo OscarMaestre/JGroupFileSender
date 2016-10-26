@@ -12,10 +12,6 @@ import java.net.UnknownHostException;
 import com.gomezoscar.jgroupfilesender.utils.Constants;
 import com.gomezoscar.jgroupfilesender.utils.Observer;
 public class FileSender extends UDPProcessor {
-	public FileSender ( String groupIP ) throws UnknownHostException {
-		this.groupIP=InetAddress.getByName(groupIP);
-		
-	}
 	
 	public void sendMetadata(String filename) 
 			throws UnknownHostException, SocketException, IOException
@@ -29,8 +25,10 @@ public class FileSender extends UDPProcessor {
 		pw.println(fileSize);
 		pw.flush();
 	}
-	public void sendFile (String filename, Observer observer) 
+	public void sendFile (String ip, String filename, Observer observer) 
 			throws IOException{
+		this.openSocket(ip);
+		this.sendMetadata(filename);
 		FileInputStream fis;
 		fis=new FileInputStream(filename);
 		byte[] block=new byte[Constants.BLOCK_SIZE];
@@ -46,8 +44,10 @@ public class FileSender extends UDPProcessor {
 	}
 	
 	
-	public void sendFile (String filename) 
+	public void sendFile (String ip, String filename) 
 			throws IOException{
+		this.openSocket(ip);
+		this.sendMetadata(filename);
 		FileInputStream fis;
 		File file=new File(filename);
 		fis=new FileInputStream(filename);

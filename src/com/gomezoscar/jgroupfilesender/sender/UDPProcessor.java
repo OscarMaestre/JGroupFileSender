@@ -22,7 +22,8 @@ public class UDPProcessor {
 		super();
 	}
 
-	public void openSocket() throws IOException {
+	public void openSocket(String ip) throws IOException {
+		this.groupIP=InetAddress.getByName(ip);
 		senderSocket= new MulticastSocket (Constants.UDP_PORT);
 		senderSocket.joinGroup(this.groupIP);
 	}
