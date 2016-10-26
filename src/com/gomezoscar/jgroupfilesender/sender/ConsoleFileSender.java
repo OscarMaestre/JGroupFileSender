@@ -13,7 +13,7 @@ public class ConsoleFileSender {
 		ResourceBundle messages;
 		currentLocale=new Locale("es", "ES");
 		messages=ResourceBundle.getBundle("resources/MessagesBundle", currentLocale);
-		FileSender fileSender;
+		UDPProcessor fileSender;
 		try{
 			fileSender=new FileSender("224.0.0.14");
 			System.out.println(messages.getString("FILE_NOT_FOUND"));
