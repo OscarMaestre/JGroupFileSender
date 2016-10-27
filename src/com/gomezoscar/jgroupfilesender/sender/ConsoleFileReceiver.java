@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.gomezoscar.jgroupfilesender.utils.Constants;
+
 public class ConsoleFileReceiver {
 
 	public static void main(String[] args) {
@@ -15,7 +17,7 @@ public class ConsoleFileReceiver {
 		messages=ResourceBundle.getBundle("resources/MessagesBundle", currentLocale);
 		FileReceiver fileReceiver;
 		try{
-			fileReceiver=new FileReceiver();
+			fileReceiver=new FileReceiver("224.0.0.1", Constants.UDP_PORT);
 			fileReceiver.receiveFile(args[0]);
 			
 		}

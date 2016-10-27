@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.gomezoscar.jgroupfilesender.utils.Constants;
+
 public class ConsoleFileSender {
 
 	public static void main(String[] args) {
@@ -15,9 +17,9 @@ public class ConsoleFileSender {
 		messages=ResourceBundle.getBundle("resources/MessagesBundle", currentLocale);
 		FileSender fileSender;
 		try{
-			fileSender=new FileSender();
-			System.out.println(messages.getString("FILE_NOT_FOUND"));
-			fileSender.sendFile("224.0.0.14", "/home/usuario/prueba.txt");
+			fileSender=new FileSender("224.0.0.1", Constants.UDP_PORT);
+			//System.out.println(messages.getString("FILE_NOT_FOUND"));
+			fileSender.sendFile("/home/usuario/prueba.txt");
 		}
 		catch (UnknownHostException e){
 			System.out.println(messages.getString("INVALID_IP"));

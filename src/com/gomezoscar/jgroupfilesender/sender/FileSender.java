@@ -13,21 +13,21 @@ import com.gomezoscar.jgroupfilesender.utils.Constants;
 import com.gomezoscar.jgroupfilesender.utils.Observer;
 public class FileSender extends UDPProcessor {
 	
+	public FileSender(String _ip, int _port) throws UnknownHostException {
+		super(_ip, _port);
+	}
+
 	public void sendMetadata(String filename) 
 			throws UnknownHostException, SocketException, IOException
 	{
 		File file=new File(filename);
 		long fileSize=file.length();
-		
-		PrintWriter pw=getPrintWriter();
-		pw.println(filename);
-		pw.flush();
-		pw.println(fileSize);
-		pw.flush();
+		this.sendLine(filename);
+		this.sendLine(String.valueOf(fileSize));
 	}
 	public void sendFile (String ip, String filename, Observer observer) 
 			throws IOException{
-		this.openSocket(ip);
+		this.openSocket();
 		this.sendMetadata(filename);
 		FileInputStream fis;
 		fis=new FileInputStream(filename);
@@ -44,16 +44,16 @@ public class FileSender extends UDPProcessor {
 	}
 	
 	
-	public void sendFile (String ip, String filename) 
+	public void sendFile (String filename) 
 			throws IOException{
-		this.openSocket(ip);
+		this.openSocket();
 		this.sendMetadata(filename);
 		FileInputStream fis;
 		File file=new File(filename);
 		fis=new FileInputStream(filename);
 		byte[] block=new byte[Constants.BLOCK_SIZE];
 		int read=fis.read(block);
-		DatagramPacket packet=new DatagramPacket(block, read);
+		DatagramPacket packet=new DatagramPacket(block, read, this.groupIP, Constants.UDP_PORT);
 		while (read!=-1){
 			senderSocket.send(packet);
 			//observer.blockSent();

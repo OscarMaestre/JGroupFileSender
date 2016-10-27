@@ -8,16 +8,18 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class FileReceiver extends UDPProcessor{
-	private MulticastSocket senderSocket=null;
-	private InetAddress groupIP;
+	
+	public FileReceiver(String _ip, int _port) throws UnknownHostException {
+		super(_ip, _port);
+	}
+
 	
 	public void receiveFile(String ip) throws 
 			IOException
 	{
-		this.openSocket(ip);
-		BufferedReader bfr=this.getBufferedReader();
-		String fileName=bfr.readLine();
-		System.out.println("Filename:"+fileName);
+		this.openSocket();
+		String fileName=this.receiveLine();
+		System.out.println(fileName);
 	}
 	
 
