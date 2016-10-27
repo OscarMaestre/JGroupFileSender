@@ -16,13 +16,15 @@ public class ConsoleFileReceiver {
 		FileReceiver fileReceiver;
 		try{
 			fileReceiver=new FileReceiver();
-			fileReceiver.receiveFile("224.0.0.14");
+			fileReceiver.receiveFile(args[0]);
 			
 		}
 		catch (UnknownHostException e){
+			e.printStackTrace();
 			System.out.println(messages.getString("INVALID_IP"));
 		} 
 		catch (IOException e) {
+			e.printStackTrace();
 			System.out.println(messages.getString("UNKNOWN_ERROR"));
 		}
 
