@@ -20,6 +20,8 @@ public class FileReceiver extends UDPProcessor{
 		this.openSocket();
 		String fileName=this.receiveLine();
 		System.out.println(fileName);
+		String fileSize=this.receiveLine();
+		System.out.println(fileSize);
 	}
 	
 
