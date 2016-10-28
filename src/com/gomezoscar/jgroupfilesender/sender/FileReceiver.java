@@ -14,7 +14,7 @@ public class FileReceiver extends UDPProcessor{
 	}
 
 	
-	public void receiveFile(String ip) throws 
+	public void receiveFile() throws 
 			IOException
 	{
 		this.openSocket();
