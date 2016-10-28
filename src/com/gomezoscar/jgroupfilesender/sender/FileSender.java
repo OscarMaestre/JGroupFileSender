@@ -21,19 +21,24 @@ public class FileSender extends UDPProcessor {
 			throws UnknownHostException, SocketException, IOException
 	{
 		File file=new File(filename);
+		String name=file.getName();
+		this.sendLine(name);
 		long fileSize=file.length();
-		this.sendLine(filename);
 		this.sendLine(String.valueOf(fileSize));
+		long totalBlocks=1 + (fileSize / Constants.BLOCK_SIZE) ;
+		this.sendLine(String.valueOf(totalBlocks));
 	}
-	public void sendFile (String ip, String filename, Observer observer) 
-			throws IOException{
+	public void sendFile (String filename, Observer observer) 
+			throws IOException
+	{
 		this.openSocket();
 		this.sendMetadata(filename);
 		FileInputStream fis;
+		File file=new File(filename);
 		fis=new FileInputStream(filename);
 		byte[] block=new byte[Constants.BLOCK_SIZE];
 		int read=fis.read(block);
-		DatagramPacket packet=new DatagramPacket(block, read);
+		DatagramPacket packet=new DatagramPacket(block, read, this.groupIP, Constants.UDP_PORT);
 		while (read!=-1){
 			senderSocket.send(packet);
 			observer.blockSent();
@@ -45,7 +50,8 @@ public class FileSender extends UDPProcessor {
 	
 	
 	public void sendFile (String filename) 
-			throws IOException{
+			throws IOException
+	{
 		this.openSocket();
 		this.sendMetadata(filename);
 		FileInputStream fis;
