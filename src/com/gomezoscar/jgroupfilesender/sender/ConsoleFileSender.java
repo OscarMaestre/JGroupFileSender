@@ -7,22 +7,9 @@ import java.util.ResourceBundle;
 
 import com.gomezoscar.jgroupfilesender.utils.Constants;
 import com.gomezoscar.jgroupfilesender.utils.Observer;
+import com.gomezoscar.jgroupfilesender.utils.ObserverWithPrint;
 
-class BlockSentObserver implements Observer{
 
-	@Override
-	public void blockSent() {
-		System.out.println("Block sent");
-		
-	}
-
-	@Override
-	public void blockReceived() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-}
 public class ConsoleFileSender {
 
 	public static void main(String[] args) {
@@ -35,7 +22,8 @@ public class ConsoleFileSender {
 		try{
 			fileSender=new FileSender(args[0], Constants.UDP_PORT);
 			//System.out.println(messages.getString("FILE_NOT_FOUND"));
-			BlockSentObserver observer=new BlockSentObserver();
+			ObserverWithPrint observer=new ObserverWithPrint();
+			fileSender.setObserver(observer);
 			//fileSender.sendFile(args[1]);
 			fileSender.sendFile(args[1], observer);
 		}

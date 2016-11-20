@@ -9,9 +9,11 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.gomezoscar.jgroupfilesender.utils.Constants;
+import com.gomezoscar.jgroupfilesender.utils.Observer;
 import com.gomezoscar.jgroupfilesender.utils.UDPInputStream;
 import com.gomezoscar.jgroupfilesender.utils.UDPOutputStream;
 
@@ -24,26 +26,17 @@ public class UDPProcessor {
 	private String ip;
 	private int port;
 	public static ResourceBundle messages;
+	private Locale currentLocale;
+	protected Observer observer=null;
 	
 	public UDPProcessor (String _ip,int _port) throws UnknownHostException{
 		this.groupIP=InetAddress.getByName(_ip);
 		this.port=_port;
+	}
 		
+	public void setObserver(Observer o){
+		this.observer=o;
 	}
-	public static void printHelp(){
-		System.out.print("\t");
-		System.out.println(
-				messages.getString("HELP_MESSAGE")
-		);
-	}
-	public static void printResource(String msg){
-		System.out.println(
-				messages.getString("ERROR_MESSAGE") +": "+
-				messages.getString(msg)
-		);
-	}
-	
-	
 	
 	
 	public void openSocket() throws IOException {

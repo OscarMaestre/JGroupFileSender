@@ -7,13 +7,15 @@ import java.net.DatagramPacket;
 import java.net.UnknownHostException;
 
 import com.gomezoscar.jgroupfilesender.utils.Constants;
+import com.gomezoscar.jgroupfilesender.utils.Observer;
 
 public class FileReceiver extends UDPProcessor{
 	
+
 	public FileReceiver(String _ip, int _port) throws UnknownHostException {
 		super(_ip, _port);
 	}
-
+	
 	
 	public void receiveFile() throws 
 			IOException
@@ -30,12 +32,17 @@ public class FileReceiver extends UDPProcessor{
 		FileOutputStream fos=new FileOutputStream(file);
 		DatagramPacket packet;
 		
+		if (this.observer!=null) {
+			this.observer.setTotalBlocks(totalBlocks);
+		}
 		
 		for (long block=0; block<totalBlocks; block++){
 			byte[] buf = new byte[Constants.BLOCK_SIZE];
 		    packet = new DatagramPacket(buf, buf.length);
 		    this.senderSocket.receive(packet);
-		    System.out.println((1+block) + " of " + totalBlocks);
+		    if (this.observer!=null) {
+		    	observer.blockReceived();
+		    }
 		    fos.write(buf);
 		}
 	}

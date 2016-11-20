@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.gomezoscar.jgroupfilesender.utils.Constants;
+import com.gomezoscar.jgroupfilesender.utils.ObserverWithPrint;
+import com.gomezoscar.jgroupfilesender.utils.Utils;
 
 public class ConsoleFileReceiver {
 	
@@ -17,12 +19,13 @@ public class ConsoleFileReceiver {
 		FileReceiver fileReceiver;
 		try{
 			fileReceiver=new FileReceiver(args[0], Constants.UDP_PORT);
+			fileReceiver.setObserver(new ObserverWithPrint());
 			fileReceiver.receiveFile();
 			
 		}
 		catch (ArrayIndexOutOfBoundsException e){
-			UDPProcessor.printResource("MISSING_ARGS_MESSAGE");
-			UDPProcessor.printHelp();
+			Utils.printResource("MISSING_ARGS_MESSAGE");
+			Utils.printHelp();
 			return ;
 		}
 		catch (UnknownHostException e){
@@ -31,7 +34,7 @@ public class ConsoleFileReceiver {
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
-			UDPProcessor.printResource("UNKNOWN_ERROR");
+			Utils.printResource("UNKNOWN_ERROR");
 		}
 
 

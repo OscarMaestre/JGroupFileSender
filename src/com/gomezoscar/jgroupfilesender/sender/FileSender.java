@@ -26,6 +26,9 @@ public class FileSender extends UDPProcessor {
 		long fileSize=file.length();
 		this.sendLine(String.valueOf(fileSize));
 		long totalBlocks=1 + (fileSize / Constants.BLOCK_SIZE) ;
+		if (this.observer!=null){
+			this.observer.setTotalBlocks(totalBlocks);
+		}
 		this.sendLine(String.valueOf(totalBlocks));
 	}
 	public void sendFile (String filename, Observer observer) 
