@@ -20,6 +20,7 @@ public class ConsoleFileReceiver {
 		try{
 			fileReceiver=new FileReceiver(args[0], Constants.UDP_PORT);
 			fileReceiver.setObserver(new ObserverWithPrint());
+			fileReceiver.receiveMetadata();
 			fileReceiver.receiveFile();
 			
 		}
