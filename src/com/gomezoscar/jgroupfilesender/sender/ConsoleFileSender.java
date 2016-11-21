@@ -12,7 +12,7 @@ import com.gomezoscar.jgroupfilesender.utils.ObserverWithPrint;
 
 public class ConsoleFileSender {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		Locale currentLocale;
 		ResourceBundle messages;

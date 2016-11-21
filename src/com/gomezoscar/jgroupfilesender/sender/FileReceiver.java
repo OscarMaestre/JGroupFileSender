@@ -25,7 +25,8 @@ public class FileReceiver extends UDPProcessor implements Runnable{
 		String fileSize=this.receiveLine();
 		this.fileSize=Long.parseLong(fileSize);
 		System.out.println(fileSize);
-		totalBlocks=Long.valueOf( this.receiveLine() );		
+		totalBlocks=Long.valueOf( this.receiveLine() );
+		System.out.println(totalBlocks);
 	}
 	
 	
@@ -45,7 +46,7 @@ public class FileReceiver extends UDPProcessor implements Runnable{
 			IOException
 	{
 		
-		System.out.print("Receiving");
+		System.out.println("Receiving");
 		File file=new File(filename);
 		FileOutputStream fos=new FileOutputStream(file);
 		DatagramPacket packet;
@@ -54,15 +55,17 @@ public class FileReceiver extends UDPProcessor implements Runnable{
 			this.observer.setTotalBlocks(totalBlocks);
 		}
 		
-		for (long block=0; block<totalBlocks; block++){
-			byte[] buf = new byte[Constants.BLOCK_SIZE];
-		    packet = new DatagramPacket(buf, buf.length);
+		byte[] buf = new byte[Constants.BLOCK_SIZE];
+		packet = new DatagramPacket(buf, buf.length);
+		for (long block=1; block<=totalBlocks; block++){
 		    this.senderSocket.receive(packet);
 		    if (this.observer!=null) {
-		    	observer.blockReceived();
+		    	//observer.blockReceived();
+		    	System.out.println(block+" "+packet.getLength());
 		    }
 		    System.out.print("#");
-		    fos.write(buf);
+		    fos.write(buf, 0, packet.getLength());
+		    //fos.write(buf);
 		}
 		fos.flush();
 		fos.close();
