@@ -7,7 +7,6 @@ import java.net.DatagramPacket;
 import java.net.UnknownHostException;
 
 import com.gomezoscar.jgroupfilesender.utils.Constants;
-import com.gomezoscar.jgroupfilesender.utils.Observer;
 
 public class FileReceiver extends UDPProcessor implements Runnable{
 	String filename;

@@ -26,15 +26,12 @@ public class ConsoleFileReceiver {
 		}
 		catch (ArrayIndexOutOfBoundsException e){
 			Utils.printResource("MISSING_ARGS_MESSAGE");
-			Utils.printHelp();
-			return ;
+			Utils.printResource("HELP_MESSAGE_RECEIVER");
 		}
 		catch (UnknownHostException e){
-			e.printStackTrace();
-			
+			Utils.printResource("UNKNOWN_HOST_ERROR");
 		} 
 		catch (IOException e) {
-			e.printStackTrace();
 			Utils.printResource("UNKNOWN_ERROR");
 		}
 
