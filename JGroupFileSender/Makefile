@@ -4,7 +4,8 @@ PREFIJO_UTILS=com/gomezoscar/jgroupfilesender/utils/
 RESOURCES=resources
 CONSOLE_RECEIVER=ConsoleReceiver.jar
 CONSOLE_SENDER=ConsoleSender.jar
-all: consolereceiver consolesender
+GUI_RECEIVER=GuiFileReceiver.jar
+all: consolereceiver consolesender guireceiver
 
 
 consolereceiver:
@@ -35,4 +36,19 @@ consolesender:
 		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)Utils.class  \
 		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)Observer.class ; \
 		java -jar $(CONSOLE_SENDER)  
+
+
+guireceiver:
+	 rm $(GUI_RECEIVER); jar -cvfe $(GUI_RECEIVER) com.gomezoscar.jgroupfilesender.sender.GuiFileReceiver  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_SENDER)ConsoleFileReceiver.class \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_SENDER)FileReceiver.class \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_SENDER)UDPProcessor.class \
+		-C $(DIRECTORIO_SENDER) $(RESOURCES) \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)ObserverWithPrint.class  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)Constants.class  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)UDPOutputStream.class  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)UDPInputStream.class  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)Utils.class  \
+		-C $(DIRECTORIO_SENDER) $(PREFIJO_UTILS)Observer.class ; \
+		java -jar $(GUI_RECEIVER)  
 
